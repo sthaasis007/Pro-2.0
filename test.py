@@ -1,163 +1,171 @@
-# from tkinter import*
-# from tkinter import messagebox
-
-# win=Tk()
-# win.title("Hospital login")   # for title name 
-# win.iconbitmap('C:\\Users\\Accer\\Desktop\\project\\Hospi.ico') # for putting icon should be .ico file
-# win.geometry('950x500')     #for hight and weight
-# win.resizable(False,False)
-# image = PhotoImage(file="C:\\Users\\Accer\\Desktop\\project\\sho.png")  # Provide the path to your image file
-# label = Label(win, image=image)
-# label.image = image  # Keep a reference to the image
-# label.pack()
-
-# def login():
-#     username=user.get()
-#     password=code.get()
-#     if username=='admin' and password=='admin':
-#         win.destroy()
-#         # import fpage
-        
-#     else:
-#         messagebox.showerror('Invalide',"Invalide username or pass")
-        
-# frame=Frame(win,width=350,height=350,bg="white")
-# frame.place(x=300,y=70)
-
-# top=Label(win,text='Hospital Management System',font=('Mycrosoft YaHei UI Light',32)).pack()
-
-# # heding=Label(frame,text='Log in',fg='blue',bg='white',font=('Microsoft YaHei UI Light',23,'bold'))
-# # heding.place(x=100,y=5)
-
-# def on_enter(e):
-#     user.delete(0,'end')
-
-# def on_leave(e):
-#     name=user.get()
-#     if name=='':
-#         user.insert(0,'Username')
-
-# user=Entry(frame,width=25,fg='black',border=0,bg="white",font=('Microsoft YaHei UI Light',11))
-# user.place(x=30,y=75)
-# user.insert(0,'Username')
-# user.bind('<FocusIn>',on_enter)
-# user.bind('<FocusOut>',on_leave)
-
-# Frame(frame,width=295,height=2,bg='black').place(x=25,y=107)
-
-
-# def on_enter(e):
-#     code.delete(0,'end')
-
-# def on_leave(e):
-#     name=code.get()
-#     if name=='':
-#         code.insert(0,'Password')
-
-# code=Entry(frame,width=25,fg='black',border=0,bg="white",font=('Microsoft YaHei UI Light',11))
-# code.place(x=30,y=140)
-# code.insert(0,'Password')
-# code.bind('<FocusIn>',on_enter)
-# code.bind('<FocusOut>',on_leave)
-# Frame(frame,width=295,height=2,bg='black').place(x=25,y=177)
-# Button(frame,width=30,text='Log in',bg='blue',font=8,fg='white',border=0,command=login).place(x=35,y=200)
-
-
-
-
-# win.mainloop()
-
-
-import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import *
 import sqlite3
+from tkinter import messagebox
+from tkinter.ttk import Treeview 
 
-def create_database():
-    # Connect to the SQLite database (or create it if it doesn't exist)
-    conn = sqlite3.connect('login.db')
-    c = conn.cursor()
+def doc():
+    global docimg
+    doc=Toplevel()
+    doc.title("Hospital login")
+    doc.state('zoomed')
+    doc.iconbitmap('Hospi.ico')
+    docimg=PhotoImage(file='doc1.png')
+    Label(doc,image=docimg).place(x=-20,y=0)
+    conn=sqlite3.connect('hospital.db')
+    cursor=conn.cursor()
+    cursor.execute("""CREATE TABLE IF NOT EXISTS doc(
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                name             TEXT,
+                spec             TEXT,
+                rol              TEXT,
+                slry             INT
+    )""")
 
-    # Create a table named 'users' if it doesn't exist
-    c.execute('''CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY,
-                    username TEXT UNIQUE,
-                    password TEXT
-                )''')
+    frame=Frame(doc,width=350,height=340,bg="light gray")
+    frame.place(x=500,y=180)
+    def on_enter(e):
+        username.delete(0,'end')
 
-    # Commit changes and close the connection
-    conn.commit()
-    conn.close()
+    def on_leave(e):
+        name=username.get()
+        if name=='':
+            username.insert(0,'Doctor Name')
+            
+    username=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    username.place(x=45,y=50,height=30)
+    username.insert(0,"Doctor Name")
+    username.bind('<FocusIn>',on_enter)
+    username.bind('<FocusOut>',on_leave)
 
-def add_user(username, password):
-    # Connect to the SQLite database
-    conn = sqlite3.connect('login.db')
-    c = conn.cursor()
+    def on_enter(e):
+        address.delete(0,'end')
 
-    try:
-        # Insert a new user into the 'users' table
-        c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        print(f"User '{username}' added successfully.")
-    except sqlite3.IntegrityError:
-        print(f"User '{username}' already exists.")
+    def on_leave(e):
+        name=address.get()
+        if name=='':
+            address.insert(0,'Special In')
 
-    # Commit changes and close the connection
-    conn.commit()
-    conn.close()
+    address=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    address.place(x=45,y=100,height=30)
+    address.insert(0,"Special In")
+    address.bind('<FocusIn>',on_enter)
+    address.bind('<FocusOut>',on_leave)
 
-def authenticate_user(username, password):
-    # Connect to the SQLite database
-    conn = sqlite3.connect('login.db')
-    c = conn.cursor()
+    def on_enter(e):
+        role.delete(0,'end')
 
-    # Check if the provided username and password match a user in the 'users' table
-    c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-    user = c.fetchone()
+    def on_leave(e):
+        name=role.get()
+        if name=='':
+            role.insert(0,'Role')
 
-    # Close the database connection
-    conn.close()
+    role=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    role.place(x=45,y=150,height=30)
+    role.insert(0,"Role")
+    role.bind('<FocusIn>',on_enter)
+    role.bind('<FocusOut>',on_leave)
 
-    return user is not None
+    def on_enter(e):
+        salary.delete(0,'end')
 
-def register_user():
-    username = username_entry.get()
-    password = password_entry.get()
+    def on_leave(e):
+        name=salary.get()
+        if name=='':
+            salary.insert(0,'Salary')
 
-    if username and password:
-        add_user(username, password)
-        messagebox.showinfo("Registration Successful", f"User '{username}' registered successfully.")
-    else:
-        messagebox.showerror("Error", "Both username and password are required.")
+    salary=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    salary.place(x=45,y=200,height=30)
+    salary.insert(0,"Salary")
+    salary.bind('<FocusIn>',on_enter)
+    salary.bind('<FocusOut>',on_leave)
 
-def login():
-    username = username_entry.get()
-    password = password_entry.get()
+    def add():
+        conn=sqlite3.connect('hospital.db')
+        c=conn.cursor()
+        c.execute("INSERT INTO doc(name,spec,rol,slry) VALUES(?,?,?,?)"
+                ,(username.get(),address.get(),role.get(),salary.get()))
+        conn.commit()
+        conn.close()
+        username.delete(0,END)
+        address.delete(0,END)
+        role.delete(0,END)
+        salary.delete(0,END)
 
-    if authenticate_user(username, password):
-        messagebox.showinfo("Login Successful", f"Welcome, {username}!")
-    else:
-        messagebox.showerror("Login Failed", "Invalid username or password.")
+    btn_add=Button(frame,width=15,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
+    btn_add.place(x=20,y=250)
 
-# Create the main window
-root = tk.Tk()
-root.title("Login App")
+    def show():
+        conn = sqlite3.connect("hospital.db")
+        c = conn.cursor()
+        c.execute('SELECT * FROM doc')
+        records = c.fetchall()
+        conn.close()
 
-# Create username label and entry field
-tk.Label(root, text="Username:").pack(pady=5)
-username_entry = tk.Entry(root)
-username_entry.pack(pady=5)
+        # Create a new window to display the records
+        display_window = Tk()
+        display_window.title("Doctor Records")
 
-# Create password label and entry field
-tk.Label(root, text="Password:").pack(pady=5)
-password_entry = tk.Entry(root, show="*")
-password_entry.pack(pady=5)
+        # Create Treeview widget to display records
+        tree = Treeview(display_window, columns=("ID", "Name", "Specialization", "Role", "Salary"), show="headings")
+        tree.pack()
 
-# Create register and login buttons
-ttk.Button(root, text="Register", command=register_user).pack(pady=10)
-ttk.Button(root, text="Login", command=login).pack(pady=10)
+        tree.heading("ID", text="ID")
+        tree.heading("Name", text="Name")
+        tree.heading("Specialization", text="Specialization")
+        tree.heading("Role", text="Role")
+        tree.heading("Salary", text="Salary")
 
-# Initialize the database
-create_database()
+        # Insert records into Treeview
+        for record in records:
+            tree.insert("", "end", values=record)
 
-# Run the main event loop
-root.mainloop()
+        # Add a button to the window
+        button = Button(display_window, text="Close", command=display_window.destroy)
+        button.pack()
+
+
+    btn_retrive=Button(frame,width=15,text='Show records',bg='blue',font=8,fg='white',border=0,command=show)
+    btn_retrive.place(x=190,y=250)
+
+win=Tk()
+win.title("Welcome")
+win.state('zoomed')
+win.iconbitmap('Hospi.ico')
+pic=PhotoImage(file='Img2.png')
+Label(win,image=pic).pack()
+
+frame=Frame(win,width=350,height=100,bg="gray")
+frame.place(x=200,y=150)
+lblford=Label(frame,text="For Doctor info",bg='gray',fg='white',font=('Mycrosoft YaHei UI Light',15,'bold')).place(x=100,y=10)
+doc=Button(frame,width=30,text='Doc',bg='blue',font=8,fg='white',border=0,command=doc).place(x=40,y=50)
+
+def reg():
+    reg=Tk()
+
+
+
+frame=Frame(win,width=350,height=100,bg="dark gray")
+frame.place(x=700,y=150)
+lblford=Label(frame,text='Registration',bg='dark gray',fg='white',font=('Mycrosoft YaHei UI Light',15,'bold')).place(x=110,y=10)
+doc=Button(frame,width=30,text='Reg',bg='blue',font=8,fg='white',border=0,command=reg).place(x=40,y=50)
+
+def ptr():
+    ptr=Tk()
+
+
+frame=Frame(win,width=350,height=100,bg="dark gray")
+frame.place(x=200,y=400)
+lblforc=Label(frame,text="For Patient report info",bg='dark gray',fg='white',font=('Mycrosoft YaHei UI Light',15,'bold')).place(x=70,y=10)
+doc=Button(frame,width=30,text='Report',bg='blue',font=8,fg='white',border=0,command=ptr).place(x=40,y=50)
+
+
+def stf():
+    stf=Tk()
+
+    
+frame=Frame(win,width=350,height=100,bg="gray")
+frame.place(x=700,y=400)
+lblford=Label(frame,text="Staff Info",bg='gray',fg='white',font=('Mycrosoft YaHei UI Light',15,'bold')).place(x=120,y=10)
+doc=Button(frame,width=30,text='Staff',bg='blue',font=8,fg='white',border=0,command=stf).place(x=40,y=50)
+
+win.mainloop()
