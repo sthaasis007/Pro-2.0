@@ -13,6 +13,9 @@ def doc():
     doc=Tk()
     doc.title("Hospital login")
     doc.state('zoomed')
+    doc.iconbitmap('Hospi.ico')
+    # docimg=PhotoImage(file='doc1.png')
+    # Label(doc,image=docimg).place(x=0,y=0)
     conn=sqlite3.connect('hospital.db')
     cursor=conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS doc(
@@ -128,17 +131,17 @@ def doc():
     btn_retrive=Button(frame,width=10,text='Retrive',bg='blue',font=8,fg='white',border=0,command=retrive)
     btn_retrive.place(x=125,y=300)
 
-    def delete():
-        conn=sqlite3.connect("hospital.db")
-        c=conn.cursor()
-        c.execute("DELETE FROM doc WHERE ID="+delete_box.get())
-        conn.commit()
-        conn.close()
-        delete_box.delete(0,END)
-        retrive()
+    # def delete():
+    #     conn=sqlite3.connect("hospital.db")
+    #     c=conn.cursor()
+    #     c.execute("DELETE FROM doc WHERE ID="+delete_box.get())
+    #     conn.commit()
+    #     conn.close()
+    #     delete_box.delete(0,END)
+    #     retrive()
 
-    btn_delete=Button(frame,width=10,text='Delete',bg='blue',font=8,fg='white',border=0,command=delete)
-    btn_delete.place(x=240,y=300)
+    # btn_delete=Button(frame,width=10,text='Delete',bg='blue',font=8,fg='white',border=0,command=delete)
+    # btn_delete.place(x=240,y=300)
 
     def edit():
         global editor
@@ -235,6 +238,9 @@ def doc():
     
     lbl=Label(frame,text="Doctor Details form",bg="light gray",font=('Microsoft YaHei UI Light',15,'bold'))
     lbl.place(x=50,y=9)
+    def bck():
+        doc.destroy()
+    back=Button(doc,text="<== Back",font=('Arial Bold',10),command=bck).place(x=0,y=10)
 
 
 frame=Frame(win,width=350,height=100,bg="gray")
