@@ -601,7 +601,7 @@ def ptr():
     btn_edit=Button(frame,width=15,text='Update Records',bg='blue',font=8,fg='white',border=0,command=edit)
     btn_edit.place(x=170,y=340)
     def back():
-        ptr.destroy
+        ptr.destroy()
     ext=Button(ptr,text="<== Back",font=("Arial Bold",10),command=back).place(x=0,y=10)
 
 
