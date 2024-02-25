@@ -66,10 +66,13 @@ def register_user():
             messagebox.showerror("Error", "Both username and password are required.")
         win.destroy()
     
-    win=Tk()
+    global loimg
+    win=Toplevel()
     win.title("Hospital login")
     win.geometry('950x500') 
     win.resizable(False,False)
+    loimg=PhotoImage(file='img2.png')
+    Label(win,image=loimg).pack()
     frame=Frame(win,width=350,height=350,bg="white")
     frame.place(x=300,y=70)
 
@@ -134,9 +137,11 @@ root=Tk()
 root.title("Hospital login")
 root.geometry('950x500') 
 root.resizable(False,False)
+img=PhotoImage(file='login.png')
+Label(root,image=img).place(x=80,y=70)
 
 frame=Frame(root,width=350,height=350,bg="white")
-frame.place(x=300,y=70)
+frame.place(x=500,y=70)
 
 top=Label(root,text='Hospital Management System',font=('Mycrosoft YaHei UI Light',32)).pack()
 
