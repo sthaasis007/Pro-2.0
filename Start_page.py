@@ -115,6 +115,10 @@ def doc():
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
+        username.insert(0,"Doctor Name")
+        address.insert(0,"Special In")
+        role.insert(0,"Role")
+        salary.insert(0,"Salary")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
     btn_add.place(x=10,y=300)
@@ -736,6 +740,10 @@ def stf():
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
+        username.insert(0,"Name")
+        address.insert(0,"Address")
+        role.insert(0,"Role")
+        salary.insert(0,"Salary")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
     btn_add.place(x=10,y=300)
