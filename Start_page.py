@@ -271,7 +271,12 @@ def reg():
                 name             TEXT,
                 dies             TEXT,
                 rom              INT,
-                bed             INT
+                bed             INT,
+                ag             INT,
+                gndr            TEXT,
+                adres           TEXT,
+                wght            INT,
+                hgt         INT
     )""")
 
     frame=Frame(reg,width=350,height=350,bg="light gray")
@@ -300,11 +305,11 @@ def reg():
     def on_leave(e):
         name=address.get()
         if name=='':
-            address.insert(0,'Diagnosed With')
+            address.insert(0,'Age')
 
     address=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     address.place(x=30,y=100,height=30)
-    address.insert(0,"Diagnosed With")
+    address.insert(0,"Age")
     address.bind('<FocusIn>',on_enter)
     address.bind('<FocusOut>',on_leave)
 
@@ -314,11 +319,11 @@ def reg():
     def on_leave(e):
         name=role.get()
         if name=='':
-            role.insert(0,'Room No.')
+            role.insert(0,'Height')
 
     role=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     role.place(x=30,y=150,height=30)
-    role.insert(0,"Room No.")
+    role.insert(0,"Height")
     role.bind('<FocusIn>',on_enter)
     role.bind('<FocusOut>',on_leave)
 
@@ -328,18 +333,18 @@ def reg():
     def on_leave(e):
         name=salary.get()
         if name=='':
-            salary.insert(0,'Bed No.')
+            salary.insert(0,'Weight')
 
     salary=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     salary.place(x=30,y=200,height=30)
-    salary.insert(0,"Bed No.")
+    salary.insert(0,"Weight")
     salary.bind('<FocusIn>',on_enter)
     salary.bind('<FocusOut>',on_leave)
 
     def add():
         conn=sqlite3.connect('hospital.db')
         c=conn.cursor()
-        c.execute("INSERT INTO ptrc(name,dies,rom,bed) VALUES(?,?,?,?)"
+        c.execute("INSERT INTO ptrc(name,ag,hgt,wght) VALUES(?,?,?,?)"
                 ,(username.get(),address.get(),role.get(),salary.get()))
         conn.commit()
         conn.close()
@@ -347,6 +352,10 @@ def reg():
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
+        username.insert(0,"Patient Name")
+        address.insert(0,"Age")
+        role.insert(0,"Height")
+        salary.insert(0,"Weight")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
     btn_add.place(x=120,y=250)
@@ -373,16 +382,6 @@ def ptr():
     ptrimg=PhotoImage(file="ptbg.png")
     Label(ptr,image=ptrimg).place(x=-150,y=0)
     lbl=Label(ptr,text='Patient',bg='light blue',font=('Arial Bold',50)).pack()
-
-    conn=sqlite3.connect('hospital.db')
-    cursor=conn.cursor()
-    cursor.execute("""CREATE TABLE IF NOT EXISTS ptrc(
-                ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                name             TEXT,
-                dies             TEXT,
-                rom              INT,
-                bed             INT
-    )""")
 
 
     frame=Frame(ptr,width=350,height=400,bg="light gray")
@@ -472,6 +471,10 @@ def ptr():
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
+        username.insert(0,"Patient Name")
+        address.insert(0,"Diagnosed With")
+        role.insert(0,"Room No.")
+        salary.insert(0,"Bed No.")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
     btn_add.place(x=10,y=300)
@@ -483,19 +486,34 @@ def ptr():
         records=c.fetchall()
         conn.close()
 
-        tree =Treeview(ptr,column=("ID","Name","Diagnosed With","Room No.","Bed No."),show="headings")
-        tree.place(x=200,y=0)
+        tree =Treeview(ptr,column=("ID","Name","Diagnosed With","Room No.","Bed No.","Age","Gender","Address","Weight","Height"),show="headings")
+        tree.place(x=180,y=0)
 
         tree.heading("ID", text="ID")
+        tree.column("ID",width=25)
         tree.heading("Name", text="Name")
+        tree.column("Name",width=150)
         tree.heading("Diagnosed With", text="Diagnosed With")
+        tree.column("Diagnosed With",width=170)
         tree.heading("Room No.", text="Room No.")
+        tree.column("Room No.",width=90)
         tree.heading("Bed No.", text="Bed No.")
+        tree.column("Bed No.",width=90)
+        tree.heading("Age",text="Age")
+        tree.column("Age",width=50)
+        tree.heading("Gender",text="Gender")
+        tree.column("Gender",width=80)
+        tree.heading("Address",text="Address")
+        tree.column("Address",width=150)
+        tree.heading("Weight",text="weight")
+        tree.column("Weight",width=90)
+        tree.heading("Height",text="Height")
+        tree.column("Height",width=90)
         for record in records:
             tree.insert("", "end", values=record)
 
-    btn_retrive=Button(frame,width=10,text='Retrive',bg='blue',font=8,fg='white',border=0,command=retrive)
-    btn_retrive.place(x=125,y=300)
+    btn_retrive=Button(frame,width=13,text='Show Records',bg='blue',font=8,fg='white',border=0,command=retrive)
+    btn_retrive.place(x=112,y=300)
 
     def delete():
         conn=sqlite3.connect("hospital.db")
@@ -511,7 +529,7 @@ def ptr():
 
     def edit():
         global editor
-        editor=Tk()
+        editor=Toplevel()
         editor.iconbitmap('Hospi.ico')
         editor.title('Update Data')
         editor.geometry('300x400')
@@ -593,12 +611,13 @@ def ptr():
 
     updatebox=Entry(frame,width=15,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     updatebox.place(x=30,y=340,height=30)
-    updatebox.insert(0,"Update Entry (Id)")
+    updatebox.insert(0,"Details (Id)")
     updatebox.bind('<FocusIn>',on_enter)
     updatebox.bind('<FocusOut>',on_leave)
+    Label(frame,text="Use id to see details",bg="light gray",font=('Microsoft YaHei UI Light',8)).place(x=30,y=370)
 
 
-    btn_edit=Button(frame,width=15,text='Update Records',bg='blue',font=8,fg='white',border=0,command=edit)
+    btn_edit=Button(frame,width=15,text='See Record',bg='blue',font=8,fg='white',border=0,command=edit)
     btn_edit.place(x=170,y=340)
     def back():
         ptr.destroy()
