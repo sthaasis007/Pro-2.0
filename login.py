@@ -68,6 +68,7 @@ def register_user():
     
     global loimg
     win=Toplevel()
+    win.iconbitmap("Hospi.ico")
     win.title("Hospital login")
     win.geometry('950x500') 
     win.resizable(False,False)
@@ -134,6 +135,7 @@ def login():
         messagebox.showerror("Login Failed", "Invalid username or password.")
 
 root=Tk()
+root.iconbitmap("Hospi.ico")
 root.title("Hospital login")
 root.geometry('950x500') 
 root.resizable(False,False)
