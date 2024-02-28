@@ -740,7 +740,7 @@ def stf():
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
-        username.insert(0,"Name")
+        username.insert(0,"Staff Name")
         address.insert(0,"Address")
         role.insert(0,"Role")
         salary.insert(0,"Salary")
@@ -790,7 +790,7 @@ def stf():
         con=sqlite3.connect('hospital.db')
         c=con.cursor()
         record_id=updatebox.get()
-        c.execute('SELECT * FROM doc WHERE ID=?',(record_id,))
+        c.execute('SELECT * FROM staff WHERE ID=?',(record_id,))
         records=c.fetchall()
         global username_editor
         global address_editor
@@ -885,5 +885,11 @@ frame=Frame(win,width=350,height=100,bg="gray")
 frame.place(x=700,y=400)
 lblford=Label(frame,text="Staff Info",bg='gray',fg='white',font=('Mycrosoft YaHei UI Light',15,'bold')).place(x=120,y=10)
 doc=Button(frame,width=30,text='Staff',bg='blue',font=8,fg='white',border=0,command=stf).place(x=40,y=50)
+
+def log_btn():
+    win.destroy()
+    import login
+
+Button(win,text="Log out",font=('Mycrosoft YaHei UI Light',8,'bold'),bg="red",fg="white",command=log_btn,border=6).place(x=5,y=0)
 
 win.mainloop()
