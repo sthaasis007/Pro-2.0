@@ -760,9 +760,9 @@ def stf():
 
         ptrtree.heading("ID", text="ID")
         ptrtree.heading("Name", text="Name")
-        ptrtree.heading("Diagnosed With", text="Diagnosed With")
-        ptrtree.heading("Room No.", text="Room No.")
-        ptrtree.heading("Bed No.", text="Bed No.")
+        ptrtree.heading("Diagnosed With", text="Address")
+        ptrtree.heading("Room No.", text="Role")
+        ptrtree.heading("Bed No.", text="Salary")
         for record in records:
             ptrtree.insert("", "end", values=record)
 
