@@ -177,7 +177,7 @@ def on_leave(e):
 
 code1=Entry(frame,width=25,fg='black',border=0,bg="white",font=('Microsoft YaHei UI Light',11))
 code1.place(x=30,y=140)
-code1.insert(0,'Password')
+code1.insert(0,'Password')#commpent inputed
 code1.bind('<FocusIn>',on_enter)
 code1.bind('<FocusOut>',on_leave)
 Frame(frame,width=295,height=2,bg='black').place(x=25,y=177)
