@@ -344,12 +344,15 @@ def reg():
     salary.insert(0,"Weight")
     salary.bind('<FocusIn>',on_enter)
     salary.bind('<FocusOut>',on_leave)
+    die="Unknown"
+    rom=0
+    bd=0
 
     def add():
         conn=sqlite3.connect('hospital.db')
         c=conn.cursor()
-        c.execute("INSERT INTO ptrc(name,ag,hgt,wght) VALUES(?,?,?,?)"
-                ,(username.get(),address.get(),role.get(),salary.get()))
+        c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght) VALUES(?,?,?,?,?,?,?)"
+                ,(username.get(),die,rom,bd,address.get(),role.get(),salary.get()))
         conn.commit()
         conn.close()
         username.delete(0,END)
