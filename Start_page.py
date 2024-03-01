@@ -341,11 +341,11 @@ def reg():
     def on_leave(e):
         name=role.get()
         if name=='':
-            role.insert(0,'Height')
+            role.insert(0,'Height (In feet)')
 
     role=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     role.place(x=30,y=150,height=30)
-    role.insert(0,"Height")
+    role.insert(0,"Height (In feet)")
     role.bind('<FocusIn>',on_enter)
     role.bind('<FocusOut>',on_leave)
 
@@ -365,12 +365,33 @@ def reg():
     die="Unknown"
     rom=0
     bd=0
-
+    def feettometer(feet):
+        return feet * 0.3048
+    
     def add():
         conn=sqlite3.connect('hospital.db')
         c=conn.cursor()
-        c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght) VALUES(?,?,?,?,?,?,?)"
-                ,(username.get(),die,rom,bd,age.get(),role.get(),salary.get()))
+
+        name = username.get()
+        age_value = age.get()
+        height_value = role.get()
+        weight_value = salary.get()
+
+        if name == "" or age_value == "" or height_value == "" or weight_value == "":
+            messagebox.showerror("Error", "Please fill in all fields.")
+            return 
+
+        try:
+            height= feettometer(float(height_value))
+            weight = float(weight_value)
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid height and weight values.")
+            return
+        bmi = round(weight / (height ** 2),2)
+
+
+        c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght,bindx) VALUES(?,?,?,?,?,?,?,?)"
+                ,(username.get(),die,rom,bd,age.get(),role.get(),salary.get(),bmi))
         conn.commit()
         conn.close()
         username.delete(0,END)
