@@ -304,18 +304,18 @@ def reg():
     username.bind('<FocusOut>',on_leave)
 
     def on_enter(e):
-        address.delete(0,'end')
+        age.delete(0,'end')
 
     def on_leave(e):
-        name=address.get()
+        name=age.get()
         if name=='':
-            address.insert(0,'Age')
+            age.insert(0,'Age')
 
-    address=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    address.place(x=30,y=100,height=30)
-    address.insert(0,"Age")
-    address.bind('<FocusIn>',on_enter)
-    address.bind('<FocusOut>',on_leave)
+    age=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    age.place(x=30,y=100,height=30)
+    age.insert(0,"Age")
+    age.bind('<FocusIn>',on_enter)
+    age.bind('<FocusOut>',on_leave)
 
     def on_enter(e):
         role.delete(0,'end')
@@ -352,15 +352,15 @@ def reg():
         conn=sqlite3.connect('hospital.db')
         c=conn.cursor()
         c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght) VALUES(?,?,?,?,?,?,?)"
-                ,(username.get(),die,rom,bd,address.get(),role.get(),salary.get()))
+                ,(username.get(),die,rom,bd,age.get(),role.get(),salary.get()))
         conn.commit()
         conn.close()
         username.delete(0,END)
-        address.delete(0,END)
+        age.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
         username.insert(0,"Patient Name")
-        address.insert(0,"Age")
+        age.insert(0,"Age")
         role.insert(0,"Height")
         salary.insert(0,"Weight")
 
