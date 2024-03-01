@@ -25,10 +25,11 @@ def doc():
                 name             TEXT,
                 spec             TEXT,
                 rol              TEXT,
-                slry             INT
+                slry             INT,
+                exp         INT
     )""")
 
-    frame=Frame(doc,width=350,height=400,bg="light gray")
+    frame=Frame(doc,width=350,height=440,bg="light gray")
     frame.place(x=500,y=230)
 
     lbl=Label(frame,text="Doctor Details form",bg="light gray",font=('Microsoft YaHei UI Light',15,'bold'))
@@ -57,7 +58,7 @@ def doc():
             address.insert(0,'Special In')
 
     address=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    address.place(x=30,y=100,height=30)
+    address.place(x=30,y=95,height=30)
     address.insert(0,"Special In")
     address.bind('<FocusIn>',on_enter)
     address.bind('<FocusOut>',on_leave)
@@ -71,7 +72,7 @@ def doc():
             role.insert(0,'Role')
 
     role=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    role.place(x=30,y=150,height=30)
+    role.place(x=30,y=135,height=30)
     role.insert(0,"Role")
     role.bind('<FocusIn>',on_enter)
     role.bind('<FocusOut>',on_leave)
@@ -85,10 +86,24 @@ def doc():
             salary.insert(0,'Salary')
 
     salary=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    salary.place(x=30,y=200,height=30)
+    salary.place(x=30,y=175,height=30)
     salary.insert(0,"Salary")
     salary.bind('<FocusIn>',on_enter)
     salary.bind('<FocusOut>',on_leave)
+
+    def on_enter(e):
+        experiance.delete(0,'end')
+
+    def on_leave(e):
+        name=experiance.get()
+        if name=='':
+            experiance.insert(0,'Experiance (In years)')
+
+    experiance=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    experiance.place(x=30,y=215,height=30)
+    experiance.insert(0,"Experiance (in years)")
+    experiance.bind('<FocusIn>',on_enter)
+    experiance.bind('<FocusOut>',on_leave)
 
     def on_enter(e):
         delete_box.delete(0,'end')
@@ -99,7 +114,7 @@ def doc():
             delete_box.insert(0,'Delete')
 
     delete_box=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    delete_box.place(x=30,y=250,height=30)
+    delete_box.place(x=30,y=255,height=30)
     delete_box.insert(0,"Delete")
     delete_box.bind("<FocusIn>",on_enter)
     delete_box.bind('<FocusOut>',on_leave)
@@ -130,14 +145,16 @@ def doc():
         records=c.fetchall()
         conn.close()
         
-        tree = Treeview(doc, columns=("ID", "Name", "Specialization", "Role", "Salary"), show="headings")
+        tree = Treeview(doc, columns=("ID", "Name", "Specialization", "Role", "Salary","Experiance"), show="headings")
         tree.place(x=200,y=0)
 
         tree.heading("ID", text="ID")
+        tree.column("ID",width=25)
         tree.heading("Name", text="Name")
         tree.heading("Specialization", text="Specialization")
         tree.heading("Role", text="Role")
         tree.heading("Salary", text="Salary")
+        tree.heading("Experiance",text="Experiance")
         for record in records:
             tree.insert("", "end", values=record)
 
@@ -280,7 +297,8 @@ def reg():
                 gndr            TEXT,
                 adres           TEXT,
                 wght            INT,
-                hgt         INT
+                hgt         INT,
+                bindx       FLOAT
     )""")
 
     frame=Frame(reg,width=350,height=350,bg="light gray")
@@ -493,7 +511,7 @@ def ptr():
         records=c.fetchall()
         conn.close()
 
-        tree =Treeview(ptr,column=("ID","Name","Diagnosed With","Room No.","Bed No.","Age","Gender","Address","Weight","Height"),show="headings")
+        tree =Treeview(ptr,column=("ID","Name","Diagnosed With","Room No.","Bed No.","Age","Gender","Address","Weight","Height","BMI"),show="headings")
         tree.place(x=180,y=0)
 
         tree.heading("ID", text="ID")
@@ -516,6 +534,8 @@ def ptr():
         tree.column("Weight",width=90)
         tree.heading("Height",text="Height")
         tree.column("Height",width=90)
+        tree.heading("BMI",text="BMI")
+        tree.column("BMI",width=50)
         for record in records:
             tree.insert("", "end", values=record)
 
