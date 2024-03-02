@@ -5,7 +5,7 @@ scr = Tk()
 scr.title("Medical Hub")   # for title name 
 scr.iconbitmap('Hospi.ico') # for putting icon should be .ico file
 scr.geometry('900x500')     #for hight and weight
-scr.resizable(False,TRUE)
+scr.resizable(False,False)
 pic=PhotoImage(file="Ho.png")
 Label(scr,image=pic).place(x=50,y=0)
 scr.config(bg='gray')
