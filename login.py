@@ -129,7 +129,7 @@ def login():
     if authenticate_user(username, password):
         messagebox.showinfo("Login Successful", f"Welcome, {username} press ok to enter")
         root.destroy()
-        import Start_page
+        import Main_page
         
     else:
         messagebox.showerror("Login Failed", "Invalid username or password.")
@@ -177,9 +177,10 @@ def on_leave(e):
 
 code1=Entry(frame,width=25,fg='black',border=0,bg="white",font=('Microsoft YaHei UI Light',11))
 code1.place(x=30,y=140)
-code1.insert(0,'Password')#commpent inputed
+code1.insert(0,'Password')
 code1.bind('<FocusIn>',on_enter)
 code1.bind('<FocusOut>',on_leave)
+
 Frame(frame,width=295,height=2,bg='black').place(x=25,y=177)
 Button(frame,width=30,text='Log in',bg='blue',font=8,fg='white',border=0,command=login).place(x=35,y=200)
 Label(frame,text="Don't have account ",bg="white",font=('Microsoft YaHei UI Light',9)).place(x=45,y=230)
