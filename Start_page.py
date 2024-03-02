@@ -330,38 +330,63 @@ def reg():
             age.insert(0,'Age')
 
     age=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    age.place(x=30,y=100,height=30)
+    age.place(x=30,y=90,height=30)
     age.insert(0,"Age")
     age.bind('<FocusIn>',on_enter)
     age.bind('<FocusOut>',on_leave)
 
     def on_enter(e):
-        role.delete(0,'end')
+        address.delete(0,'end')
 
     def on_leave(e):
-        name=role.get()
+        name=address.get()
         if name=='':
-            role.insert(0,'Height (In feet)')
+            address.insert(0,'Age')
 
-    role=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    role.place(x=30,y=150,height=30)
-    role.insert(0,"Height (In feet)")
-    role.bind('<FocusIn>',on_enter)
-    role.bind('<FocusOut>',on_leave)
+    address=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    address.place(x=30,y=130,height=30)
+    address.insert(0,"Address")
+    address.bind('<FocusIn>',on_enter)
+    address.bind('<FocusOut>',on_leave)
 
     def on_enter(e):
-        salary.delete(0,'end')
+        hight.delete(0,'end')
 
     def on_leave(e):
-        name=salary.get()
+        name=hight.get()
         if name=='':
-            salary.insert(0,'Weight')
+            hight.insert(0,'Height (In feet)')
 
-    salary=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
-    salary.place(x=30,y=200,height=30)
-    salary.insert(0,"Weight")
-    salary.bind('<FocusIn>',on_enter)
-    salary.bind('<FocusOut>',on_leave)
+    hight=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    hight.place(x=30,y=170,height=30)
+    hight.insert(0,"Height (In feet)")
+    hight.bind('<FocusIn>',on_enter)
+    hight.bind('<FocusOut>',on_leave)
+
+    def on_enter(e):
+        wght.delete(0,'end')
+
+    def on_leave(e):
+        name=wght.get()
+        if name=='':
+            wght.insert(0,'Weight')
+
+    wght=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
+    wght.place(x=30,y=210,height=30)
+    wght.insert(0,"Weight")
+    wght.bind('<FocusIn>',on_enter)
+    wght.bind('<FocusOut>',on_leave)
+    
+    def print_gender():
+        select = gender.get()
+    gender=StringVar()
+
+    male_checkbox = Checkbutton(frame, text="Male", variable=gender, onvalue="Male", offvalue="")
+    male_checkbox.place(x=30,y=250)
+
+    female_checkbox = Checkbutton(frame, text="Female", variable=gender, onvalue="Female", offvalue="")
+    female_checkbox.place(x=100,y=250)
+
     die="Unknown"
     rom=0
     bd=0
@@ -374,8 +399,8 @@ def reg():
 
         name = username.get()
         age_value = age.get()
-        height_value = role.get()
-        weight_value = salary.get()
+        height_value = hight.get()
+        weight_value = wght.get()
 
         if name == "" or age_value == "" or height_value == "" or weight_value == "":
             messagebox.showerror("Error", "Please fill in all fields.")
@@ -390,21 +415,21 @@ def reg():
         bmi = round(weight / (height ** 2),2)
 
 
-        c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght,bindx) VALUES(?,?,?,?,?,?,?,?)"
-                ,(username.get(),die,rom,bd,age.get(),role.get(),salary.get(),bmi))
+        c.execute("INSERT INTO ptrc(name,dies,rom,bed,ag,hgt,wght,bindx,adres,gndr) VALUES(?,?,?,?,?,?,?,?,?,?)"
+                ,(username.get(),die,rom,bd,age.get(),hight.get(),wght.get(),bmi,address.get(),gender.get()))
         conn.commit()
         conn.close()
         username.delete(0,END)
         age.delete(0,END)
-        role.delete(0,END)
-        salary.delete(0,END)
+        hight.delete(0,END)
+        wght.delete(0,END)
         username.insert(0,"Patient Name")
         age.insert(0,"Age")
-        role.insert(0,"Height")
-        salary.insert(0,"Weight")
+        hight.insert(0,"Height")
+        wght.insert(0,"Weight")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
-    btn_add.place(x=120,y=250)
+    btn_add.place(x=180,y=250)
     def bck():
         reg.destroy()
     back=Button(reg,text="<== Back",font=('Arial Bold',10),command=bck).place(x=0,y=10)
@@ -587,39 +612,55 @@ def ptr():
         c.execute('SELECT * FROM ptrc WHERE ID=?',(record_id,))
         records=c.fetchall()
         global username_editor
+        global diesease_editor
+        global room_editor
+        global bed_editor
+        global age_editor
         global address_editor
-        global role_editor
-        global salary_editor
 
         username_editor=Entry(editor,width=30)
         username_editor.grid(row=0,column=1,padx=20,pady=(10,0))
 
+        diesease_editor=Entry(editor,width=30)
+        diesease_editor.grid(row=1,column=1)
+
+        room_editor=Entry(editor,width=30)
+        room_editor.grid(row=2,column=1)
+
+        bed_editor=Entry(editor,width=30)
+        bed_editor.grid(row=3,column=1)
+
+        age_editor=Entry(editor,width=30)
+        age_editor.grid(row=6,column=1)
+
         address_editor=Entry(editor,width=30)
-        address_editor.grid(row=1,column=1)
-
-        role_editor=Entry(editor,width=30)
-        role_editor.grid(row=2,column=1)
-
-        salary_editor=Entry(editor,width=30)
-        salary_editor.grid(row=3,column=1)
+        address_editor.grid(row=7,column=1)
         
         username_label=Label(editor,text="Patient Name")
         username_label.grid(row=0,column=0,pady=(10,0))
 
-        address_label=Label(editor,text="Diesease")
-        address_label.grid(row=1,column=0)
+        diesease_label=Label(editor,text="Diesease")
+        diesease_label.grid(row=1,column=0)
 
-        role_label=Label(editor,text="Room no.")
-        role_label.grid(row=2,column=0)
+        room_label=Label(editor,text="Room no.")
+        room_label.grid(row=2,column=0)
 
-        salary_label=Label(editor,text="Bed no.")
-        salary_label.grid(row=3,column=0)
+        bed_label=Label(editor,text="Bed no.")
+        bed_label.grid(row=3,column=0)
+
+        age_label=Label(editor,text="Age")
+        age_label.grid(row=6,column=0)
+
+        address_label=Label(editor,text="Address")
+        address_label.grid(row=7,column=0)
 
         for record in records:
             username_editor.insert(0,record[1])
-            address_editor.insert(0,record[2])
-            role_editor.insert(0,record[3])
-            salary_editor.insert(0,record[4])
+            diesease_editor.insert(0,record[2])
+            room_editor.insert(0,record[3])
+            bed_editor.insert(0,record[4])
+            age_editor.insert(0,record[5])
+            address_editor.insert(0,record[7])
 
         updatebox.delete(0,END)
         btn_save=Button(editor,text='SAVE',command=lambda:update(record_id))
@@ -634,13 +675,17 @@ def ptr():
                 name=:u,
                 dies=:a,
                 rom=:r,
-                bed=:s
+                bed=:s,
+                ag=:ag,
+                adres=:ad
                 WHERE ID = :id''',
                 {
                     'u': username_editor.get(),
-                    'a': address_editor.get(),
-                    'r': role_editor.get(),
-                    's': salary_editor.get(),
+                    'a': diesease_editor.get(),
+                    'r': room_editor.get(),
+                    's': bed_editor.get(),
+                    'ag': age_editor.get(),
+                    'ad': address_editor.get(),
                     'id': record_id
                 }
         )
@@ -803,6 +848,7 @@ def stf():
         ptrtree.place(x=200,y=0)
 
         ptrtree.heading("ID", text="ID")
+        ptrtree.column("ID",width=25)
         ptrtree.heading("Name", text="Name")
         ptrtree.heading("Diagnosed With", text="Address")
         ptrtree.heading("Room No.", text="Role")

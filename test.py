@@ -171,13 +171,32 @@
 # win.mainloop()
 
 
-def calculate_bmi(weight_kg, height_m):
-    return weight_kg / (height_m ** 2)
+# # def calculate_bmi(weight_kg, height_m):
+# #     return weight_kg / (height_m ** 2)
 
-# Example usage:
-weight = 70  # in kilograms
-height = 1.75  # in meters
-bmi = calculate_bmi(weight, height)
-rounded_bmi = round(bmi, 2)
-print("BMI:", rounded_bmi)
+# # # Example usage:
+# # weight = 70  # in kilograms
+# # height = 1.75  # in meters
+# # bmi = calculate_bmi(weight, height)
+# # rounded_bmi = round(bmi, 2)
+# # print("BMI:", rounded_bmi)
+
+# # Create a variable to store the selected gender
+# import tkinter as tk
+# def print_gender():
+#     selected_gender = gender.get()
+#     print("Selected Gender:", selected_gender)
+# root = tk.Tk()
+# root.title("Gender Selection")
+# # Create a variable to store the selected gender
+# gender = tk.StringVar()
+# # Create a Checkbutton for gender selection
+# male_checkbox = tk.Checkbutton(root, text="Male", variable=gender, onvalue="Male", offvalue="")
+# male_checkbox.pack()
+# female_checkbox = tk.Checkbutton(root, text="Female", variable=gender, onvalue="Female", offvalue="")
+# female_checkbox.pack()
+# # Create a button to print the selected gender
+# print_button = tk.Button(root, text="Print Gender", command=print_gender)
+# print_button.pack()
+# root.mainloop()
 
