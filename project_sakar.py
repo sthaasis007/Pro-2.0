@@ -9,7 +9,8 @@ scr.resizable(False,False)
 pic=PhotoImage(file="Ho.png")
 Label(scr,image=pic).place(x=50,y=0)
 scr.config(bg='gray')
-dis=Label(scr,text='Hospital Management System',bg='white',font=('Mycrosoft YaHei UI Light',40,'bold')).pack()
+name=Label(scr,text="Medical Hub",fg="blue",bg="white",font=("Mycrosoft YaHei UI Light",50,"bold")).pack()
+dis=Label(scr,text='Hospital Management System',fg="blue",bg='white',font=('Mycrosoft YaHei UI Light',40,'bold')).pack()
 
 def press():
     scr.destroy()
