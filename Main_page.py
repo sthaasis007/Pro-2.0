@@ -122,18 +122,20 @@ def doc():
     def add():
         conn=sqlite3.connect('hospital.db')
         c=conn.cursor()
-        c.execute("INSERT INTO doc(name,spec,rol,slry) VALUES(?,?,?,?)"
-                ,(username.get(),address.get(),role.get(),salary.get()))
+        c.execute("INSERT INTO doc(name,spec,rol,slry,exp) VALUES(?,?,?,?,?)"
+                ,(username.get(),address.get(),role.get(),salary.get(),experiance.get()))
         conn.commit()
         conn.close()
         username.delete(0,END)
         address.delete(0,END)
         role.delete(0,END)
         salary.delete(0,END)
+        experiance.delete(0,END)
         username.insert(0,"Doctor Name")
         address.insert(0,"Special In")
         role.insert(0,"Role")
         salary.insert(0,"Salary")
+        experiance.insert(0,"Experiance (In years)")
 
     btn_add=Button(frame,width=10,text='Add',bg='blue',font=8,fg='white',border=0,command=add)
     btn_add.place(x=10,y=300)
