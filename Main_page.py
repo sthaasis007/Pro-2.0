@@ -369,11 +369,11 @@ def reg():
     def on_leave(e):
         name=wght.get()
         if name=='':
-            wght.insert(0,'Weight')
+            wght.insert(0,'Weight (in kg)')
 
     wght=Entry(frame,width=30,fg='black',border=2,bg="white",font=('Microsoft YaHei UI Light',11))
     wght.place(x=30,y=210,height=30)
-    wght.insert(0,"Weight")
+    wght.insert(0,"Weight  (in kg)")
     wght.bind('<FocusIn>',on_enter)
     wght.bind('<FocusOut>',on_leave)
     
