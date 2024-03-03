@@ -4,47 +4,38 @@ import sqlite3
 
 
 def create_database():
-    # Connect to the SQLite database (or create it if it doesn't exist)
     conn = sqlite3.connect('login.db')
     c = conn.cursor()
 
-    # Create a table named 'users' if it doesn't exist
     c.execute('''CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY,
                     username TEXT UNIQUE,
                     password TEXT
                 )''')
 
-    # Commit changes and close the connection
     conn.commit()
     conn.close()
 
 def add_user(username, password):
-    # Connect to the SQLite database
     conn = sqlite3.connect('login.db')
     c = conn.cursor()
 
     try:
-        # Insert a new user into the 'users' table
         c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
         print(f"User '{username}' added successfully.")
     except sqlite3.IntegrityError:
         print(f"User '{username}' already exists.")
 
-    # Commit changes and close the connection
     conn.commit()
     conn.close()
 
 def authenticate_user(username, password):
-    # Connect to the SQLite database
     conn = sqlite3.connect('login.db')
     c = conn.cursor()
 
-    # Check if the provided username and password match a user in the 'users' table
     c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
     user = c.fetchone()
 
-    # Close the database connection
     conn.close()
 
     return user is not None
@@ -54,7 +45,14 @@ def register_user():
         username = user1.get()
         password = code1.get()
 
-        # Check if the username and password combination is allowed
+        if "@gmail.com" not in username:
+            messagebox.showerror("Invalid Username", "Username must be a Gmail address (@gmail.com).")
+            return
+        
+        if len(password) < 8:
+            messagebox.showerror("Invalid Password", "Password must be at least 8 characters long.")
+            return
+
         if username == "Username" and password == "Password":
             messagebox.showerror("Error", "Invalid username or password.")
             return
